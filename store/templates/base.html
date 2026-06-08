@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MGM Stores</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a class="navbar-brand" href="/">MGM Stores</a>
+            
+            <div class="navbar-links">
+                <a href="/">Home</a>
+                <a href="/categories/">Categories</a>
+                <a href="/cart/">Cart (<span id="cart-count">{{ request.session.cart|length }}</span>)</a>
+                {% if user.is_authenticated %}
+                    <a href="/profile/">Profile</a>
+                    <a href="/logout/">Logout</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>Owner: Pulkit Gupta | Phone: +91 62682 33036 | Mail: <a href="https://mail.google.com/mail/?view=cm&fs=1&to=mgmstoresbypulkit@gmail.com" target="_blank" rel="noopener noreferrer" class='mail'>mgmstoresbypulkit@gmail.com</a>  | Address: Indore, Madhya Pradesh</p>
+        <p>Made with ❤️ by <a href='https://www.linkedin.com/in/ayush-gupta-21b695286' class='ayush'>Ayush</a></p>
+    </footer>
+</body>
+</html>

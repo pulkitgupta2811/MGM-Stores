@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="register-page">
+  <div class="register-box">
+    <h2>Create Account</h2>
+    {% if register_error %}
+      <p class="register-error">{{ register_error }}</p>
+    {% endif %}
+    <form method="post">
+      {% csrf_token %}
+      <input type="text" name="register_name" placeholder="Full Name" required>
+      <input type="text" name="register_mobile" placeholder="Mobile Number" required>
+      <input type="email" name="register_email" placeholder="Email" required>
+      <input type="password" name="register_password" placeholder="Password" required>
+      <button type="submit">Register</button>
+    </form>
+    <p class="register-note">Already have an account? 
+      <a href="{% url 'home' %}" class="login-here-link">Login here</a>.
+    </p>
+  </div>
+</div>
+{% endblock %}

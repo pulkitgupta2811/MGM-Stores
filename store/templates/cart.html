@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="cart-container">
+    <h2 class="page-heading">🛒 Your Cart</h2>
+
+    {% if cart_items %}
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>₹{{ item.product.price|floatformat:2 }}</td>
+                <td class="cart-actions">
+                    <button onclick="updateCart({{ item.product.id }}, 'increase')" class="btn-cart plus">+</button>
+                    <button onclick="updateCart({{ item.product.id }}, 'decrease')" class="btn-cart minus">-</button>
+                    <button onclick="removeFromCart({{ item.product.id }})" class="btn-cart remove">🗑️</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="cart-summary">
+        <h3>Total: ₹{{ total }}</h3>
+        <a href="https://wa.me/916268233036?text=Hi%2C%20I’d%20like%20to%20place%20the%20following%20order%20from%20the%20website%3A%0AOrder%20Details%3A%0A{% for item in cart_items %}{{ item.product.name }} x {{ item.quantity }}%0A{% endfor %}Total%3A%20₹{{ total }}" 
+           class="btn-checkout" 
+           target="_blank" 
+           rel="noopener noreferrer">
+           Checkout on WhatsApp
+        </a>
+    </div>
+
+    {% else %}
+    <p class="empty-cart-msg">Your cart is empty. <a href="{% url 'categories' %}" class='browse-products'>Browse products</a></p>
+    {% endif %}
+</div>
+
+<script>
+function updateCart(productId, action) {
+    fetch(`/update-cart/${productId}/${action}/`)
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        }
+    });
+}
+
+function removeFromCart(productId) {
+    fetch(`/remove-from-cart/${productId}/`)
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        }
+    });
+}
+</script>
+{% endblock %}

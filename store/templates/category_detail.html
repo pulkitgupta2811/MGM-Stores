@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="page-heading">Category: {{ category.name }}</h2>
+
+{% if products %}
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <p class="price">₹{{ product.price|floatformat:2 }}</p>
+        <button onclick="addToCart({{ product.id }})" class="add-to-cart-btn">Add to Cart</button>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No products found in this category.</p>
+{% endif %}
+
+<hr class="divider">
+
+<h4 class="missing-heading">Can't find your product?</h4>
+<form action="https://wa.me/919999999999" method="get" target="_blank" class="missing-product-form">
+    <input type="text" name="text" placeholder="Describe the missing product" required>
+    <button type="submit">Request on WhatsApp</button>
+</form>
+
+<script>
+function addToCart(productId) {
+    fetch(`/add-to-cart/${productId}/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Product added to cart!");
+                // Optionally update cart count here
+            } else {
+                alert("Failed to add product.");
+            }
+        })
+        .catch(error => {
+            console.error("Error adding to cart:", error);
+            alert("Something went wrong.");
+        });
+}
+</script>
+{% endblock %}

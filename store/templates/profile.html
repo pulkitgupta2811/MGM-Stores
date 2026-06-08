@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="profile-container">
+    <h2>User Profile</h2>
+    <div class="user-details">
+        <p><strong>Name:</strong> {{ user.username }}</p>
+        <p><strong>Mobile:</strong> {{ user.mobile }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+    </div>
+
+    <h2>Order History</h2>
+
+    {% if orders %}
+        {% for order in orders %}
+            <div class="order-summary">
+                <h4>Order #{{ order.id }} - {{ order.created_at }}</h4>
+                <ul>
+                    {% for item in order.items.all %}
+                        <li>{{ item.product.name }} x {{ item.quantity }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No orders found.</p>
+    {% endif %}
+</div>
+{% endblock %}

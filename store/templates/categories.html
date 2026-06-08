@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="page-heading">Browse Categories</h2>
+
+<div class="category-grid">
+    {% for category in categories %}
+    <a href="{% url 'category_detail' category.slug %}" class="category-card">
+        {{ category.name }}
+    </a>
+    {% endfor %}
+</div>
+
+
+<hr class="divider">
+
+<h4 class="missing-heading">Can't find your product?</h4>
+<form id="missing-product-form" class="missing-product-form" target="_blank">
+    <input type="text" id="missing-product-input" placeholder="Describe the missing product" required>
+    <button type="submit">Request on WhatsApp</button>
+</form>
+
+<script>
+document.getElementById("missing-product-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const input = document.getElementById("missing-product-input").value.trim();
+    if (input.length > 0) {
+        const message = `Hi, I couldn't find the following product on your site:%0A${encodeURIComponent(input)}`;
+        const whatsappURL = `https://wa.me/916268233036?text=${message}`;
+        window.open(whatsappURL, "_blank");
+    }
+});
+</script>
+{% endblock %}
