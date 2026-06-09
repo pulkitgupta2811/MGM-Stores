@@ -68,4 +68,4 @@ After running `python manage.py seed_db`, you can use the following accounts:
 
 ### 🔑 Admin/Staff Account
 - **Admin**: Mobile `9999999999` | Password: `admin123`
-- Admin Panel: [[mgm-stores.vercel.app](https://mgm-stores.vercel.app/admin)
+- Admin Panel: [http://127.0.0.1:8000/admin](http://127.0.0.1:800/admin)
